@@ -18,32 +18,32 @@
                 <h2>Search for a City:</h2>
 
                 <input type="text" name="city-name" class= ""placeholder="Boston"/>
-                <button class="btn " id="city-btn" type="button">Search</button>
+                <button class="city-btn" id="city-btn" type="button">Search</button>
             </form>
 
             <div class= 'major-btn d-flex flex-column'>
-                <button class="btn" id="cities" type="button">New York City</button>
+                <button class="btn1" id="cities" type="button">New York City</button>
 
-                <button class="btn" id="cities" type="button">Los Angeles</button>
+                <button class="btn2" id="cities" type="button">Los Angeles</button>
 
-                <button class="btn" id="cities" type="button">Chicago</button>
+                <button class="btn3" id="cities" type="button">Chicago</button>
 
-                <button class="btn" id="cities" type="button">Houston</button>
+                <button class="btn4" id="cities" type="button">Houston</button>
 
-                <button class="btn" id="cities" type="button">Phoenix</button>
+                <button class="btn5" id="cities" type="button">Phoenix</button>
 
-                <button class="btn" id="cities" type="button">Philadelphia</button>
+                <button class="btn6" id="cities" type="button">Philadelphia</button>
 
-                <button class="btn" id="cities" type="button">San Antonio</button>
+                <button class="btn7" id="cities" type="button">San Antonio</button>
 
-                <button class="btn" id="cities" type="button">San Diego</button>
+                <button class="btn8" id="cities" type="button">San Diego</button>
             </div>
 
         </div>
         
         <div class="col-8">
             <div class="city-status">
-                <h3>Boston <span class="current-date"></span></h3>
+                <h3 class='the-city'>Boston <span class="current-date"></span></h3>
 
                 <ul class="p-0">
                     <li>Temp: <span class="temp"></span></li>
@@ -58,9 +58,13 @@
 
             <div class="forecast">
                 <h4>5-Day forecast</h4>
+
+                <div class="days">
+                </div>
             </div>
-        </div>
     </div> 
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="./assets/script/scipte.js"></script>
 </body>
 </html> 

@@ -38,3 +38,10 @@ li {
 .city-status {
     height: 300px;
 }
+
+
+.days {
+    display: flex;
+    align-content: space-between; 
+    justify-content: space-between;
+}
