@@ -1,5 +1,5 @@
 cityData = "";
-
+forecast = document.querySelector('.days')
 
 
 /*Gets weather of location*/
@@ -28,6 +28,7 @@ var getLocation = function(city) {
     })
 }
 
+/*Display forcast when clicked*/
 var getCityText = function() {
     data = "";
     var city = this.innerHTML
@@ -48,6 +49,32 @@ var getCityText = function() {
     humidityEl.textContent = (dailyArray[0].humidity);
     indexEl.textContent = (dailyArray[0].uvi);
     h3El.textContent = (city);
+
+    forecast.innerHTML = "";
+    forecast = document.querySelector('.days')
+
+    /*This is the 5 day forcast to the page*/
+    for ( i = 1; i < 6; i++) {
+        container = document.createElement('div')
+        days = document.createElement('h5')
+        list = document.createElement('ul')
+        temp = document.createElement('li')
+        wind = document.createElement('li')
+        humidity = document.createElement('li')
+
+        days.textContent = "Day" + [i]
+        temp.textContent = "Temp: " + (dailyArray[i].temp.day);
+        wind.textContent = "Wind: " + (dailyArray[i].wind_speed);
+        humidity.textContent = "Humidity: " + (dailyArray[i].humidity)
+
+        $(list).append(temp);
+        $(list).append(wind);
+        $(list).append(humidity);
+        $(container).append(days);
+        $(container).append(list);
+        $(forecast).append(container)
+        console.log(1)
+    }
 }
 
 /*Add event listener to the city button*/
