@@ -1,4 +1,6 @@
 cityData = "";
+var search = document.querySelector('.city-btn');
+var searchCity = document.querySelector('.city-name');
 forecast = document.querySelector('.days')
 
 
@@ -28,13 +30,8 @@ var getLocation = function(city) {
     })
 }
 
-/*Display forcast when clicked*/
-var getCityText = function() {
-    data = "";
-    var city = this.innerHTML
-
-    getLocation(city)
-
+/*Displays the forcast on screen*/
+var displayWeather = function(city) {
     var dailyArray = cityData.daily
 
     tempEl = document.querySelector('.temp');
@@ -43,18 +40,17 @@ var getCityText = function() {
     indexEl = document.querySelector('.index');
     h3El = document.querySelector('.the-city')
 
-    console.log(dailyArray[0])
     tempEl.textContent = (dailyArray[0].temp.day);
     windEl.textContent = (dailyArray[0].wind_speed);
     humidityEl.textContent = (dailyArray[0].humidity);
     indexEl.textContent = (dailyArray[0].uvi);
-    h3El.textContent = (city);
+    h3El.textContent = (city).toUpperCase();
 
     forecast.innerHTML = "";
-    forecast = document.querySelector('.days')
 
     /*This is the 5 day forcast to the page*/
     for ( i = 1; i < 6; i++) {
+        console.log(i)
         container = document.createElement('div')
         days = document.createElement('h5')
         list = document.createElement('ul')
@@ -77,6 +73,17 @@ var getCityText = function() {
     }
 }
 
+/*Display forcast when clicked*/
+var getCityText = function() {
+    data = "";
+    var city = this.innerHTML
+
+    getLocation(city)
+
+    displayWeather(city)
+
+}
+
 /*Add event listener to the city button*/
 var cityEvent = function() {
     for (i = 1; i < 9; i++) {
@@ -88,6 +95,15 @@ var cityEvent = function() {
     }
 }
 
+/*Displays forecast when searched*/
+var searchEvent = function() {
+    city = searchCity.value
+    
+    getLocation(city)
 
+    displayWeather(city)
+
+}
+
+search.addEventListener('click', searchEvent)
 cityEvent()
-getLocation('jacksonville')
