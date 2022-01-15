@@ -21,12 +21,16 @@ var getLocation = function(city) {
     var location = "http://api.openweathermap.org/geo/1.0/direct?q=" + city +",us&limit=1&appid=34a334a0ae495d92c14fcfe60587b3e2"
 
     fetch(location).then(function(response) {
-        response.json().then(function(data){
+        if(response.ok) {
+         response.json().then(function(data){
             var lat = data[0].lat
             var lon = data[0].lon
 
             fetchweather(lat,lon)
         })
+        }else {
+            alert('Please Enter A Valid City');
+          }
     })
 }
 
@@ -46,11 +50,18 @@ var displayWeather = function(city) {
     indexEl.textContent = (dailyArray[0].uvi);
     h3El.textContent = (city).toUpperCase();
 
+    if (dailyArray[0].uvi < 2) {
+        indexEl.classList.remove("bad");
+        indexEl.classList.add('good');
+    }else {
+        indexEl.classList.remove("good");
+        indexEl.classList.add('bad');
+    }
+
     forecast.innerHTML = "";
 
     /*This is the 5 day forcast to the page*/
     for ( i = 1; i < 6; i++) {
-        console.log(i)
         container = document.createElement('div')
         days = document.createElement('h5')
         list = document.createElement('ul')
@@ -69,7 +80,6 @@ var displayWeather = function(city) {
         $(container).append(days);
         $(container).append(list);
         $(forecast).append(container)
-        console.log(1)
     }
 }
 

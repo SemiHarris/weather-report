@@ -37,6 +37,7 @@ li {
 
 .city-status {
     height: 300px;
+    border: solid 2px black;
 }
 
 
@@ -44,4 +45,12 @@ li {
     display: flex;
     align-content: space-between; 
     justify-content: space-between;
+}
+
+.bad {
+    background-color: red;
+}
+
+.good {
+    background-color: green;
 }
