@@ -1,16 +1,21 @@
-cityData = "";
+var cityData = "";
 var search = document.querySelector('.city-btn');
 var searchCity = document.querySelector('.city-name');
-forecast = document.querySelector('.days')
-
+var forecast = document.querySelector('.days')
+var majorCities = document.querySelector('.major-btn')
+var savedCity = [];
+var city = "";
 
 /*Gets weather of location*/
 var fetchweather = function(lat,lon) {
     var weather = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&units=imperial&exclude=current,minutely,hourly,alerts&appid=34a334a0ae495d92c14fcfe60587b3e2"
-     
+
     fetch(weather).then(function(response) {
         response.json().then(function(data) {
             cityData = data
+            if (response.ok){
+                displayWeather(city)
+            }
         })
     })
    
@@ -50,10 +55,16 @@ var displayWeather = function(city) {
     indexEl.textContent = (dailyArray[0].uvi);
     h3El.textContent = (city).toUpperCase();
 
-    if (dailyArray[0].uvi < 2) {
+    if (dailyArray[0].uvi < 3) {
+        indexEl.classList.remove("moderate");
         indexEl.classList.remove("bad");
         indexEl.classList.add('good');
+    }else if (dailyArray[0].uvi < 6){
+        indexEl.classList.remove("good");
+        indexEl.classList.remove("bad");
+        indexEl.classList.add('moderate');
     }else {
+        indexEl.classList.remove("moderate");
         indexEl.classList.remove("good");
         indexEl.classList.add('bad');
     }
@@ -67,17 +78,27 @@ var displayWeather = function(city) {
         list = document.createElement('ul')
         temp = document.createElement('li')
         wind = document.createElement('li')
+        image = document.createElement('img')
         humidity = document.createElement('li')
 
-        days.textContent = "Day" + [i]
+        days.textContent = moment().add(i, 'day').format("M/D/YYYY");
         temp.textContent = "Temp: " + (dailyArray[i].temp.day);
         wind.textContent = "Wind: " + (dailyArray[i].wind_speed);
+        image.src = "https://openweathermap.org/img/wn/" + (dailyArray[i].weather[0].icon) + "@2x.png";
         humidity.textContent = "Humidity: " + (dailyArray[i].humidity)
+
+        container.style.backgroundColor = 'rgb(8, 193, 250)'
+        days.style.color = 'white';
+        temp.style.color = 'white';
+        wind.style.color = 'white';
+        humidity.style.color = 'white';
+        container.style.marginRight = "50px";
 
         $(list).append(temp);
         $(list).append(wind);
         $(list).append(humidity);
         $(container).append(days);
+        $(container).append(image);
         $(container).append(list);
         $(forecast).append(container)
     }
@@ -89,8 +110,6 @@ var getCityText = function() {
     var city = this.innerHTML
 
     getLocation(city)
-
-    displayWeather(city)
 
 }
 
@@ -108,12 +127,102 @@ var cityEvent = function() {
 /*Displays forecast when searched*/
 var searchEvent = function() {
     city = searchCity.value
-    
-    getLocation(city)
+    var cityArray = city
 
-    displayWeather(city)
+    getLocation(city)
+    if (city){
+
+        console.log(city)
+
+        savedCity.push(cityArray)
+
+        saveDataToLocal()
+    
+        loadSavedData()
+    
+    }
 
 }
 
+/*This takes the array stored locally and assigns it to a global variable*/
+var loadArray = function() {
+    var cities = localStorage.getItem("savedCity", JSON.stringify(savedCity));
+    cities = JSON.parse(cities);
+
+    savedCity = cities
+}
+
+/*Displays the saved cities as button*/
+var loadSavedData = function() {
+    var cities = localStorage.getItem("savedCity", JSON.stringify(savedCity));
+    cities = JSON.parse(cities);
+
+    console.log(cities)
+
+    majorCities.innerHTML = "";
+
+
+    for (i = 7; i > -1; i--) {
+
+        button = document.createElement('button')
+        button.className = 'btn' + (i);
+        button.id = 'cities';
+        button.type = 'button';
+        button.textContent = cities[i];
+         
+        console.log(button)
+
+        $(majorCities).append(button)
+    }
+}
+
+/*removes a element in the array so that there is only ever 8*/
+var saveDataToLocal = function() {
+    savedCity = savedCity.filter(String)
+    
+    
+    if (savedCity.length === 9){
+        
+        savedCity = savedCity.slice(1);
+
+        savedCity = savedCity.filter(String)
+
+        localStorage.setItem("savedCity", JSON.stringify(savedCity));
+        
+    }else {
+        console.log(savedCity)
+        localStorage.setItem("savedCity", JSON.stringify(savedCity));
+        console.log(savedCity)
+    }
+}
+
+/*Saved the initial buttons to local*/
+var saveData = function() {
+    if (savedCity.length === 0){
+        for (i = 1; i < 9; i++) {
+            
+            var citySave = document.querySelector(String('.btn' + i))
+            citySave = citySave.innerHTML
+
+            savedCity.push(citySave)
+
+            
+        }
+        saveDataToLocal()
+    }else {
+        loadSavedData()
+    }
+
+    
+}
+
+var loadExpCity = function() {
+    city = "Boston"
+};
+
+loadExpCity()
+getLocation('Boston')
+loadArray()
 search.addEventListener('click', searchEvent)
+saveData()
 cityEvent()

@@ -35,6 +35,11 @@ li {
     list-style-type: none;
 }
 
+ul {
+    padding: 0;
+    padding-right: 30px;
+}
+
 .city-status {
     height: 300px;
     border: solid 2px black;
@@ -44,11 +49,15 @@ li {
 .days {
     display: flex;
     align-content: space-between; 
-    justify-content: space-between;
+    justify-content: flex-start;
 }
 
 .bad {
     background-color: red;
+}
+
+.moderate { 
+    background-color: yellow;
 }
 
 .good {
