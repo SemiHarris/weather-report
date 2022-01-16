@@ -52,11 +52,11 @@ var displayWeather = function() {
     indexEl = document.querySelector('.index');
     h3El = document.querySelector('.the-city')
 
-    tempEl.textContent = (dailyArray[0].temp.day);
-    windEl.textContent = (dailyArray[0].wind_speed);
-    humidityEl.textContent = (dailyArray[0].humidity);
+    tempEl.textContent = (dailyArray[0].temp.day) + " F°"; 
+    windEl.textContent = (dailyArray[0].wind_speed) + " MPH";
+    humidityEl.textContent = (dailyArray[0].humidity) + " %";
     indexEl.textContent = (dailyArray[0].uvi);
-    h3El.textContent = (city).toUpperCase();
+    h3El.textContent = (city).toUpperCase() + " " + moment.format("M/D/YYYY");
 
     if (dailyArray[0].uvi < 3) {
         indexEl.classList.remove("moderate");
@@ -85,10 +85,10 @@ var displayWeather = function() {
         humidity = document.createElement('li')
 
         days.textContent = moment().add(i, 'day').format("M/D/YYYY");
-        temp.textContent = "Temp: " + (dailyArray[i].temp.day);
-        wind.textContent = "Wind: " + (dailyArray[i].wind_speed);
+        temp.textContent = "Temp: " + (dailyArray[i].temp.day) + " F°";
+        wind.textContent = "Wind: " + (dailyArray[i].wind_speed) + " MPH";
         image.src = "https://openweathermap.org/img/wn/" + (dailyArray[i].weather[0].icon) + "@2x.png";
-        humidity.textContent = "Humidity: " + (dailyArray[i].humidity)
+        humidity.textContent = "Humidity: " + (dailyArray[i].humidity) + " %";
 
         container.style.backgroundColor = 'rgb(8, 193, 250)'
         days.style.color = 'white';
