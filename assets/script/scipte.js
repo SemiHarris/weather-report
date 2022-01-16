@@ -8,13 +8,15 @@ var city = "";
 
 /*Gets weather of location*/
 var fetchweather = function(lat,lon) {
+    
     var weather = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&units=imperial&exclude=current,minutely,hourly,alerts&appid=34a334a0ae495d92c14fcfe60587b3e2"
-
+    
     fetch(weather).then(function(response) {
         response.json().then(function(data) {
             cityData = data
             if (response.ok){
-                displayWeather(city)
+                displayWeather()
+                
             }
         })
     })
@@ -30,8 +32,10 @@ var getLocation = function(city) {
          response.json().then(function(data){
             var lat = data[0].lat
             var lon = data[0].lon
-
+            console.log(city)
+            
             fetchweather(lat,lon)
+            debugger;
         })
         }else {
             alert('Please Enter A Valid City');
@@ -40,7 +44,8 @@ var getLocation = function(city) {
 }
 
 /*Displays the forcast on screen*/
-var displayWeather = function(city) {
+var displayWeather = function() {
+   
     var dailyArray = cityData.daily
 
     tempEl = document.querySelector('.temp');
@@ -107,7 +112,7 @@ var displayWeather = function(city) {
 /*Display forcast when clicked*/
 var getCityText = function() {
     data = "";
-    var city = this.innerHTML
+    city = this.innerHTML
 
     getLocation(city)
 
@@ -118,7 +123,6 @@ var cityEvent = function() {
     for (i = 1; i < 9; i++) {
         
         var button = document.querySelector(String('.btn' + i))
-        var value = button.innerHTML
         
         button.addEventListener('click', getCityText)
     }
@@ -128,12 +132,9 @@ var cityEvent = function() {
 var searchEvent = function() {
     city = searchCity.value
     var cityArray = city
-
+    
     getLocation(city)
     if (city){
-
-        console.log(city)
-
         savedCity.push(cityArray)
 
         saveDataToLocal()
@@ -148,16 +149,18 @@ var searchEvent = function() {
 var loadArray = function() {
     var cities = localStorage.getItem("savedCity", JSON.stringify(savedCity));
     cities = JSON.parse(cities);
-
-    savedCity = cities
-}
+    
+    if (cities === null){
+        savedCity = [];
+    }else{
+        savedCity = cities
+    }
+ }
 
 /*Displays the saved cities as button*/
 var loadSavedData = function() {
     var cities = localStorage.getItem("savedCity", JSON.stringify(savedCity));
     cities = JSON.parse(cities);
-
-    console.log(cities)
 
     majorCities.innerHTML = "";
 
@@ -170,7 +173,7 @@ var loadSavedData = function() {
         button.type = 'button';
         button.textContent = cities[i];
          
-        console.log(button)
+        button.addEventListener('click', getCityText)
 
         $(majorCities).append(button)
     }
@@ -192,7 +195,6 @@ var saveDataToLocal = function() {
     }else {
         console.log(savedCity)
         localStorage.setItem("savedCity", JSON.stringify(savedCity));
-        console.log(savedCity)
     }
 }
 
@@ -206,8 +208,8 @@ var saveData = function() {
 
             savedCity.push(citySave)
 
-            
         }
+        cityEvent()
         saveDataToLocal()
     }else {
         loadSavedData()
@@ -218,11 +220,17 @@ var saveData = function() {
 
 var loadExpCity = function() {
     city = "Boston"
+    getLocation(city)
 };
 
-loadExpCity()
-getLocation('Boston')
+
+var x = function() {
+    var l = localStorage.removeItem('savedCity', JSON.stringify(savedCity))
+    console.log(l)
+}
+
+
 loadArray()
-search.addEventListener('click', searchEvent)
 saveData()
-cityEvent()
+loadExpCity()
+search.addEventListener('click', searchEvent)
