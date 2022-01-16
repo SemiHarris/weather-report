@@ -56,7 +56,7 @@ var displayWeather = function() {
     windEl.textContent = (dailyArray[0].wind_speed) + " MPH";
     humidityEl.textContent = (dailyArray[0].humidity) + " %";
     indexEl.textContent = (dailyArray[0].uvi);
-    h3El.textContent = (city).toUpperCase() + " " + moment.format("M/D/YYYY");
+    h3El.textContent = (city).toUpperCase() + " " + moment().format("M/D/YYYY");
 
     if (dailyArray[0].uvi < 3) {
         indexEl.classList.remove("moderate");
@@ -222,8 +222,8 @@ var loadExpCity = function() {
 };
 
 
-
 loadArray()
 saveData()
 loadExpCity()
 search.addEventListener('click', searchEvent)
+
