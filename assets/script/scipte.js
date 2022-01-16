@@ -224,11 +224,6 @@ var loadExpCity = function() {
 };
 
 
-var x = function() {
-    var l = localStorage.removeItem('savedCity', JSON.stringify(savedCity))
-    console.log(l)
-}
-
 
 loadArray()
 saveData()
