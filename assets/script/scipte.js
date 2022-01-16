@@ -9,7 +9,7 @@ var city = "";
 /*Gets weather of location*/
 var fetchweather = function(lat,lon) {
     
-    var weather = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&units=imperial&exclude=current,minutely,hourly,alerts&appid=34a334a0ae495d92c14fcfe60587b3e2"
+    var weather = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&units=imperial&exclude=current,minutely,hourly,alerts&appid=4a237e6027d36d581c3bdaa5a0fa24f5"
     
     fetch(weather).then(function(response) {
         response.json().then(function(data) {
@@ -25,7 +25,7 @@ var fetchweather = function(lat,lon) {
 
 /*Gets location*/
 var getLocation = function(city) {
-    var location = "http://api.openweathermap.org/geo/1.0/direct?q=" + city +",us&limit=1&appid=34a334a0ae495d92c14fcfe60587b3e2"
+    var location = "http://api.openweathermap.org/geo/1.0/direct?q=" + city +",us&limit=1&appid=4a237e6027d36d581c3bdaa5a0fa24f5"
 
     fetch(location).then(function(response) {
         if(response.ok) {
